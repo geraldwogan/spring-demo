@@ -14,4 +14,17 @@ public class SimpleController {
         model.addAttribute("appName", appName);
         return "home";
     }
+
+    @GetMapping("/font")
+    public String fontPage(Model model){
+        model.addAttribute("appName", appName);
+        return "cssandjs/font";
+    }
+
+    @GetMapping("/styled-page")
+    public String getStyledPage(Model model) {
+        model.addAttribute("name", "Baeldung Reader");
+        return "cssandjs/styledPage";
+    }
+
 }
