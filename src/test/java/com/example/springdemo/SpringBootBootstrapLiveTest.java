@@ -92,4 +92,36 @@ public class SpringBootBootstrapLiveTest {
         assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
     }
 
+    @Test
+    public void whenUpdateCreatedBook_thenUpdated() {
+        Book book = createRandomBook();
+        String location = createBookAsUri(book);
+        book.setId(Long.parseLong(location.split("api/books/")[1]));
+        book.setAuthor("newAuthor");
+        Response response = RestAssured.given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(book)
+                .put(location);
+
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+        response = RestAssured.get(location);
+
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+        assertEquals("newAuthor", response.jsonPath()
+                .get("author"));
+    }
+
+    @Test
+    public void whenDeleteCreatedBook_thenOk() {
+        Book book = createRandomBook();
+        String location = createBookAsUri(book);
+        Response response = RestAssured.delete(location);
+
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+        response = RestAssured.get(location);
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+    }
+
 }
