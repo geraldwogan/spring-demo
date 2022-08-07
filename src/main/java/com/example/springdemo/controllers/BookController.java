@@ -18,12 +18,12 @@ public class BookController {
     private BookRepository bookRepository;
 
     @GetMapping
-    public Iterable findAll(){
+    public Iterable<Book> findAll(){
         return bookRepository.findAll();
     }
 
     @GetMapping("/title/{bookTitle}")
-    public List findByTitle(@PathVariable String bookTitle){
+    public List<Book> findByTitle(@PathVariable String bookTitle){
         return bookRepository.findbyTitle(bookTitle);
     }
 
